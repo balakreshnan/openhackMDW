@@ -19,21 +19,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CloudStreamingdb'"
 		},
-		"Moviescosmosdb_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Moviescosmosdb'"
-		},
 		"Fourthcoffee_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Fourthcoffee'"
 		},
-		"fctranscation_password": {
+		"Moviescosmosdb_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'fctranscation'"
+			"metadata": "Secure string for 'connectionString' of 'Moviescosmosdb'"
 		},
 		"VanArsdel_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'VanArsdel'"
+		},
+		"fctranscation_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'fctranscation'"
 		},
 		"ADLSStore_properties_typeProperties_url": {
 			"type": "string",
@@ -118,9 +118,6 @@
 					"Fourthcoffee_password": {
 						"value": "[parameters('Fourthcoffee_password')]"
 					},
-					"fctranscation_password": {
-						"value": "[parameters('fctranscation_password')]"
-					},
 					"VanArsdel_connectionString": {
 						"value": "[parameters('VanArsdel_connectionString')]"
 					},
@@ -129,12 +126,6 @@
 					},
 					"Fourthcoffee_properties_typeProperties_userId": {
 						"value": "[parameters('Fourthcoffee_properties_typeProperties_userId')]"
-					},
-					"fctranscation_properties_typeProperties_host": {
-						"value": "[parameters('fctranscation_properties_typeProperties_host')]"
-					},
-					"fctranscation_properties_typeProperties_userId": {
-						"value": "[parameters('fctranscation_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -155,11 +146,40 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"fctranscation_password": {
+						"value": "[parameters('fctranscation_password')]"
+					},
+					"fctranscation_properties_typeProperties_host": {
+						"value": "[parameters('fctranscation_properties_typeProperties_host')]"
+					},
+					"fctranscation_properties_typeProperties_userId": {
+						"value": "[parameters('fctranscation_properties_typeProperties_userId')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_2')]"
 			]
 		}
 	]

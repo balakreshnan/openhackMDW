@@ -14,16 +14,16 @@
 		"CloudStreamingdb_connectionString": {
 			"value": ""
 		},
-		"Moviescosmosdb_connectionString": {
-			"value": ""
-		},
 		"Fourthcoffee_password": {
 			"value": ""
 		},
-		"fctranscation_password": {
+		"Moviescosmosdb_connectionString": {
 			"value": ""
 		},
 		"VanArsdel_connectionString": {
+			"value": ""
+		},
+		"fctranscation_password": {
 			"value": ""
 		},
 		"ADLSStore_properties_typeProperties_url": {
