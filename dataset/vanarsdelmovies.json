@@ -1,0 +1,42 @@
+{
+	"name": "vanarsdelmovies",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VanArsdel",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "MovieID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "MovieTitle",
+				"type": "varchar"
+			},
+			{
+				"name": "Category",
+				"type": "varchar"
+			},
+			{
+				"name": "Rating",
+				"type": "varchar"
+			},
+			{
+				"name": "RunTimeMin",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "ReleaseDate",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Movies"
+		}
+	}
+}
