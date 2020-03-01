@@ -1393,6 +1393,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "moviesdb.csv",
 						"fileSystem": "incoming"
 					},
 					"columnDelimiter": ",",
