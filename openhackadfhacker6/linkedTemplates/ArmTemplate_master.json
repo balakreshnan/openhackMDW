@@ -23,9 +23,33 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Moviescosmosdb'"
 		},
+		"Fourthcoffee_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Fourthcoffee'"
+		},
+		"fctranscation_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'fctranscation'"
+		},
 		"ADLSStore_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://openhackdatalake.dfs.core.windows.net"
+		},
+		"Fourthcoffee_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Rentals"
+		},
+		"Fourthcoffee_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "openhackadmin"
+		},
+		"fctranscation_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Transactions_2018"
+		},
+		"fctranscation_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "openhackadmin"
 		},
 		"containerUri": {
 			"type": "string",
@@ -86,6 +110,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Fourthcoffee_password": {
+						"value": "[parameters('Fourthcoffee_password')]"
+					},
+					"fctranscation_password": {
+						"value": "[parameters('fctranscation_password')]"
+					},
+					"Fourthcoffee_properties_typeProperties_host": {
+						"value": "[parameters('Fourthcoffee_properties_typeProperties_host')]"
+					},
+					"Fourthcoffee_properties_typeProperties_userId": {
+						"value": "[parameters('Fourthcoffee_properties_typeProperties_userId')]"
+					},
+					"fctranscation_properties_typeProperties_host": {
+						"value": "[parameters('fctranscation_properties_typeProperties_host')]"
+					},
+					"fctranscation_properties_typeProperties_userId": {
+						"value": "[parameters('fctranscation_properties_typeProperties_userId')]"
 					}
 				}
 			},

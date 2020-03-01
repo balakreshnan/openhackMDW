@@ -17,8 +17,26 @@
 		"Moviescosmosdb_connectionString": {
 			"value": ""
 		},
+		"Fourthcoffee_password": {
+			"value": ""
+		},
+		"fctranscation_password": {
+			"value": ""
+		},
 		"ADLSStore_properties_typeProperties_url": {
 			"value": "https://openhackdatalake.dfs.core.windows.net"
+		},
+		"Fourthcoffee_properties_typeProperties_host": {
+			"value": "C:\\Rentals"
+		},
+		"Fourthcoffee_properties_typeProperties_userId": {
+			"value": "openhackadmin"
+		},
+		"fctranscation_properties_typeProperties_host": {
+			"value": "C:\\Transactions_2018"
+		},
+		"fctranscation_properties_typeProperties_userId": {
+			"value": "openhackadmin"
 		}
 	}
 }
