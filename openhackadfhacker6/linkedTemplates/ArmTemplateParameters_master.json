@@ -23,6 +23,9 @@
 		"fctranscation_password": {
 			"value": ""
 		},
+		"VanArsdel_connectionString": {
+			"value": ""
+		},
 		"ADLSStore_properties_typeProperties_url": {
 			"value": "https://openhackdatalake.dfs.core.windows.net"
 		},

@@ -31,6 +31,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'fctranscation'"
 		},
+		"VanArsdel_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'VanArsdel'"
+		},
 		"ADLSStore_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://openhackdatalake.dfs.core.windows.net"
@@ -117,6 +121,9 @@
 					"fctranscation_password": {
 						"value": "[parameters('fctranscation_password')]"
 					},
+					"VanArsdel_connectionString": {
+						"value": "[parameters('VanArsdel_connectionString')]"
+					},
 					"Fourthcoffee_properties_typeProperties_host": {
 						"value": "[parameters('Fourthcoffee_properties_typeProperties_host')]"
 					},
@@ -133,6 +140,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_1')]"
 			]
 		}
 	]
