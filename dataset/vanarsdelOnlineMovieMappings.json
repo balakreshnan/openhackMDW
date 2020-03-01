@@ -1,0 +1,25 @@
+{
+	"name": "vanarsdelOnlineMovieMappings",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "VanArsdel",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "MovieID",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "OnlineMovieID",
+				"type": "uniqueidentifier"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "OnlineMovieMappings"
+		}
+	}
+}
