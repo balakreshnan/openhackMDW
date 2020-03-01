@@ -37,76 +37,121 @@
 							{
 								"source": {
 									"path": "['name']"
+								},
+								"sink": {
+									"name": "actorname"
 								}
 							},
 							{
 								"source": {
 									"path": "$['availabilityDate']"
+								},
+								"sink": {
+									"name": "availabilityDate"
 								}
 							},
 							{
 								"source": {
 									"path": "$['genre']"
+								},
+								"sink": {
+									"name": "genre"
 								}
 							},
 							{
 								"source": {
 									"path": "$['rating']"
+								},
+								"sink": {
+									"name": "rating"
 								}
 							},
 							{
 								"source": {
 									"path": "$['releaseYear']"
+								},
+								"sink": {
+									"name": "releaseYear"
 								}
 							},
 							{
 								"source": {
 									"path": "$['runtime']"
+								},
+								"sink": {
+									"name": "runtime"
 								}
 							},
 							{
 								"source": {
 									"path": "$['streamingAvailabilityDate']"
+								},
+								"sink": {
+									"name": "streamingAvailabilityDate"
 								}
 							},
 							{
 								"source": {
 									"path": "$['tier']"
+								},
+								"sink": {
+									"name": "tier"
 								}
 							},
 							{
 								"source": {
 									"path": "$['title']"
+								},
+								"sink": {
+									"name": "title"
 								}
 							},
 							{
 								"source": {
 									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id"
 								}
 							},
 							{
 								"source": {
 									"path": "$['_rid']"
+								},
+								"sink": {
+									"name": "systemid"
 								}
 							},
 							{
 								"source": {
 									"path": "$['_self']"
+								},
+								"sink": {
+									"name": "systemself"
 								}
 							},
 							{
 								"source": {
 									"path": "$['_etag']"
+								},
+								"sink": {
+									"name": "systemetag"
 								}
 							},
 							{
 								"source": {
 									"path": "$['_attachments']"
+								},
+								"sink": {
+									"name": "systemattachments"
 								}
 							},
 							{
 								"source": {
 									"path": "$['_ts']"
+								},
+								"sink": {
+									"name": "systemts"
 								}
 							}
 						],
