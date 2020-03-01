@@ -19,11 +19,109 @@
 						"type": "CosmosDbSqlApiSource",
 						"preferredRegions": []
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['availabilityDate']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['genre']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['rating']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['releaseYear']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['runtime']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['streamingAvailabilityDate']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['tier']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['title']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_rid']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_self']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_etag']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_attachments']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['_ts']"
+								}
+							}
+						],
+						"collectionReference": "$['actors']"
+					}
 				},
 				"inputs": [
 					{
 						"referenceName": "moviescosmos",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "moviescosmosadls",
 						"type": "DatasetReference"
 					}
 				]
