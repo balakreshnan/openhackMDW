@@ -1,0 +1,7 @@
+{
+	"name": "FourthCoffee",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Fourth Coffee"
+	}
+}
