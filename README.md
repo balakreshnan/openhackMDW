@@ -1,2 +1,2 @@
 # openhackMDW
-Open hack MDW sampels
+Open hack MDW samples
