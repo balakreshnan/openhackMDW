@@ -13,6 +13,188 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/hcustomerupdatesvanasdel')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "VanArsdel",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CustomerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "LastName",
+						"type": "varchar"
+					},
+					{
+						"name": "FirstName",
+						"type": "varchar"
+					},
+					{
+						"name": "AddressLine1",
+						"type": "varchar"
+					},
+					{
+						"name": "AddressLine2",
+						"type": "varchar"
+					},
+					{
+						"name": "City",
+						"type": "varchar"
+					},
+					{
+						"name": "State",
+						"type": "char"
+					},
+					{
+						"name": "ZipCode",
+						"type": "char"
+					},
+					{
+						"name": "PhoneNumber",
+						"type": "char"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "Hidden",
+					"table": "CustomerUpdates"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/htranscationvanarsdel')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "VanArsdel",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "TransactionID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "CustomerID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "MovieID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "RentalDate",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ReturnDate",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "RentalCost",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "LateFee",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "RewindFlag",
+						"type": "bit"
+					},
+					{
+						"name": "CreatedDate",
+						"type": "date"
+					},
+					{
+						"name": "UpdatedDate",
+						"type": "date"
+					}
+				],
+				"typeProperties": {
+					"schema": "Hidden",
+					"table": "Transactions"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/transcationfc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "fctranscation",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/vanarsdelOnlineMovieMappings')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "VanArsdel",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "MovieID",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "OnlineMovieID",
+						"type": "uniqueidentifier"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "OnlineMovieMappings"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/vanarsdelTransactions')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -593,6 +775,79 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/movieaddressdim')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "adlsrawmovaddresscs",
+								"type": "DatasetReference"
+							},
+							"name": "adlsrawmovcust",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "adlsrawmvaddvans",
+								"type": "DatasetReference"
+							},
+							"name": "adlsrawmvaddvans",
+							"typeProperties": {}
+						},
+						{
+							"dataset": {
+								"referenceName": "adlsrawmvaddfc",
+								"type": "DatasetReference"
+							},
+							"name": "adlsrawmvaddfc",
+							"typeProperties": {}
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "adlsfinalmvadd",
+								"type": "DatasetReference"
+							},
+							"name": "adlsfinalmvadd"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Select2"
+						},
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "Select3"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "Union2"
+						}
+					],
+					"script": "source(output(\n\t\tAddressID as string,\n\t\tCustomerID as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmovcust\nsource(output(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmvaddvans\nsource(output(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmvaddfc\nadlsrawmovcust select(mapColumn(\n\t\tAddressID,\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(source = \"cloudstreaming\") ~> DerivedColumn1\nadlsrawmvaddvans select(mapColumn(\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(source = \"vanarsdel\",\n\t\tAddressID = uuid()) ~> DerivedColumn2\nadlsrawmvaddfc select(mapColumn(\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3 derive(source = \"fourthcoffee\",\n\t\tAddressID = uuid()) ~> DerivedColumn3\nDerivedColumn1, DerivedColumn2 union(byName: true)~> Union1\nUnion1, DerivedColumn3 union(byName: true)~> Union2\nUnion2 sink(input(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string,\n\t\tsource as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['dimaddress.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> adlsfinalmvadd"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CloudSales')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -799,7 +1054,53 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/transcationfc')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Moviedimpipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "moviesdimension",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "moviesdimension",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"cscustomers": {},
+									"vanarsdlmocustomer": {},
+									"fcmoviecustomer": {},
+									"adlsfnlmoviecustomer": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/moviesdimension')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/VanArsdel')]",
@@ -1264,7 +1565,10 @@
 				"[concat(variables('factoryId'), '/datasets/vanarsdelcustomers')]",
 				"[concat(variables('factoryId'), '/datasets/vanarsdelmovies')]",
 				"[concat(variables('factoryId'), '/datasets/vanarsdelmovieactors')]",
-				"[concat(variables('factoryId'), '/datasets/vanarsdelTransactions')]"
+				"[concat(variables('factoryId'), '/datasets/vanarsdelTransactions')]",
+				"[concat(variables('factoryId'), '/datasets/vanarsdelOnlineMovieMappings')]",
+				"[concat(variables('factoryId'), '/datasets/hcustomerupdatesvanasdel')]",
+				"[concat(variables('factoryId'), '/datasets/htranscationvanarsdel')]"
 			]
 		},
 		{
@@ -1313,50 +1617,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dimcustomer')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Moviedimpipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "moviesdimension",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "moviesdimension",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"cscustomers": {},
-									"vanarsdlmocustomer": {},
-									"fcmoviecustomer": {},
-									"adlsfnlmoviecustomer": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/moviesdimension')]"
 			]
 		}
 	]
