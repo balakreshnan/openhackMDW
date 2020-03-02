@@ -1,0 +1,23 @@
+{
+	"name": "finalmoviecustomer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSStore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "movies/dimensions",
+				"fileSystem": "final"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
