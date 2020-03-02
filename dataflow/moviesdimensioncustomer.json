@@ -1,5 +1,5 @@
 {
-	"name": "moviesdimension",
+	"name": "moviesdimensioncustomer",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
