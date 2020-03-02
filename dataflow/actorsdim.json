@@ -1,5 +1,5 @@
 {
-	"name": "moviesdim",
+	"name": "actorsdim",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
