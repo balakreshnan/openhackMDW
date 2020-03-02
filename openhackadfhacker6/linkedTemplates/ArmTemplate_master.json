@@ -114,18 +114,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"Fourthcoffee_password": {
-						"value": "[parameters('Fourthcoffee_password')]"
-					},
-					"VanArsdel_connectionString": {
-						"value": "[parameters('VanArsdel_connectionString')]"
-					},
-					"Fourthcoffee_properties_typeProperties_host": {
-						"value": "[parameters('Fourthcoffee_properties_typeProperties_host')]"
-					},
-					"Fourthcoffee_properties_typeProperties_userId": {
-						"value": "[parameters('Fourthcoffee_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -147,8 +135,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"Fourthcoffee_password": {
+						"value": "[parameters('Fourthcoffee_password')]"
+					},
+					"VanArsdel_connectionString": {
+						"value": "[parameters('VanArsdel_connectionString')]"
+					},
 					"fctranscation_password": {
 						"value": "[parameters('fctranscation_password')]"
+					},
+					"Fourthcoffee_properties_typeProperties_host": {
+						"value": "[parameters('Fourthcoffee_properties_typeProperties_host')]"
+					},
+					"Fourthcoffee_properties_typeProperties_userId": {
+						"value": "[parameters('Fourthcoffee_properties_typeProperties_userId')]"
 					},
 					"fctranscation_properties_typeProperties_host": {
 						"value": "[parameters('fctranscation_properties_typeProperties_host')]"
