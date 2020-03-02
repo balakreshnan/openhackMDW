@@ -1,0 +1,37 @@
+{
+	"name": "movieactorsraw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLSStore",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "MovieActors.csv",
+				"folderPath": "VanArsdel",
+				"fileSystem": "incoming"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "MovieActorID",
+				"type": "String"
+			},
+			{
+				"name": "MovieID",
+				"type": "String"
+			},
+			{
+				"name": "ActorID",
+				"type": "String"
+			}
+		]
+	}
+}

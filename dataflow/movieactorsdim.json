@@ -1,0 +1,51 @@
+{
+	"name": "movieactorsdim",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "movieactorsraw",
+						"type": "DatasetReference"
+					},
+					"name": "adlsrawmovieactorsdim"
+				},
+				{
+					"dataset": {
+						"referenceName": "movieactorsfc",
+						"type": "DatasetReference"
+					},
+					"name": "movieactorsrawafc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "movieactorsdim",
+						"type": "DatasetReference"
+					},
+					"name": "adlsmovieactorsdim"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "DerivedColumn2"
+				},
+				{
+					"name": "Union1"
+				}
+			],
+			"script": "source(output(\n\t\tMovieActorID as string,\n\t\tMovieID as string,\n\t\tActorID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmovieactorsdim\nsource(output(\n\t\tMovieActorID as string,\n\t\tMovieID as string,\n\t\tActorID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> movieactorsrawafc\nadlsrawmovieactorsdim select(mapColumn(\n\t\tMovieActorID,\n\t\tMovieID,\n\t\tActorID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(source = \"vanarsdel\") ~> DerivedColumn1\nmovieactorsrawafc select(mapColumn(\n\t\tMovieActorID,\n\t\tMovieID,\n\t\tActorID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(source = \"fourthcoffee\") ~> DerivedColumn2\nDerivedColumn1, DerivedColumn2 union(byName: true)~> Union1\nUnion1 sink(input(\n\t\tAddressID as string,\n\t\tCustomerID as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string,\n\t\tsource as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['dimmovieactors.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> adlsmovieactorsdim"
+		}
+	}
+}
