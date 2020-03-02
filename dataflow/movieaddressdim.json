@@ -1,0 +1,67 @@
+{
+	"name": "movieaddressdim",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "adlsrawmovaddresscs",
+						"type": "DatasetReference"
+					},
+					"name": "adlsrawmovcust"
+				},
+				{
+					"dataset": {
+						"referenceName": "adlsrawmvaddvans",
+						"type": "DatasetReference"
+					},
+					"name": "adlsrawmvaddvans"
+				},
+				{
+					"dataset": {
+						"referenceName": "adlsrawmvaddfc",
+						"type": "DatasetReference"
+					},
+					"name": "adlsrawmvaddfc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "adlsfinalmvadd",
+						"type": "DatasetReference"
+					},
+					"name": "adlsfinalmvadd"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "DerivedColumn2"
+				},
+				{
+					"name": "Select3"
+				},
+				{
+					"name": "DerivedColumn3"
+				},
+				{
+					"name": "Union1"
+				},
+				{
+					"name": "Union2"
+				}
+			],
+			"script": "source(output(\n\t\tAddressID as string,\n\t\tCustomerID as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmovcust\nsource(output(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmvaddvans\nsource(output(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsrawmvaddfc\nadlsrawmovcust select(mapColumn(\n\t\tAddressID,\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(source = \"cloudstreaming\") ~> DerivedColumn1\nadlsrawmvaddvans select(mapColumn(\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(source = \"vanarsdel\",\n\t\tAddressID = uuid()) ~> DerivedColumn2\nadlsrawmvaddfc select(mapColumn(\n\t\tCustomerID,\n\t\tAddressLine1,\n\t\tAddressLine2,\n\t\tCity,\n\t\tState,\n\t\tZipCode,\n\t\tCreatedDate,\n\t\tUpdatedDate\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nSelect3 derive(source = \"fourthcoffee\",\n\t\tAddressID = uuid()) ~> DerivedColumn3\nDerivedColumn1, DerivedColumn2 union(byName: true)~> Union1\nUnion1, DerivedColumn3 union(byName: true)~> Union2\nUnion2 sink(input(\n\t\tCustomerID as string,\n\t\tLastName as string,\n\t\tFirstName as string,\n\t\tPhoneNumber as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string,\n\t\tsource as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['dimaddress.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> adlsfinalmvadd"
+		}
+	}
+}
