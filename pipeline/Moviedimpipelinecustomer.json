@@ -1,9 +1,9 @@
 {
-	"name": "Moviedimpipeline",
+	"name": "Moviedimpipelinecustomer",
 	"properties": {
 		"activities": [
 			{
-				"name": "moviesdimension",
+				"name": "moviesdimensioncustomer",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
