@@ -1,0 +1,51 @@
+{
+	"name": "onlinemoviemappings",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "onlinemoviemappingsvans",
+						"type": "DatasetReference"
+					},
+					"name": "adlsonlinemoviemappingseawvan"
+				},
+				{
+					"dataset": {
+						"referenceName": "fconlinemoviemappings",
+						"type": "DatasetReference"
+					},
+					"name": "adlsonlinemoviemappingsfc"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "finalonlinemoviemappings",
+						"type": "DatasetReference"
+					},
+					"name": "finalonlinemoviemappingsdim"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Select1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "DerivedColumn2"
+				},
+				{
+					"name": "Union1"
+				}
+			],
+			"script": "source(output(\n\t\tMovieID as string,\n\t\tOnlineMovieID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsonlinemoviemappingseawvan\nsource(output(\n\t\tMovieID as string,\n\t\tOnlineMovieID as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> adlsonlinemoviemappingsfc\nadlsonlinemoviemappingseawvan select(mapColumn(\n\t\tMovieID,\n\t\tOnlineMovieID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 derive(source = \"vanarsdel\") ~> DerivedColumn1\nadlsonlinemoviemappingsfc select(mapColumn(\n\t\tMovieID,\n\t\tOnlineMovieID\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(source = \"fourthcoffee\") ~> DerivedColumn2\nDerivedColumn1, DerivedColumn2 union(byName: true)~> Union1\nUnion1 sink(input(\n\t\tAddressID as string,\n\t\tCustomerID as string,\n\t\tAddressLine1 as string,\n\t\tAddressLine2 as string,\n\t\tCity as string,\n\t\tState as string,\n\t\tZipCode as string,\n\t\tCreatedDate as string,\n\t\tUpdatedDate as string,\n\t\tsource as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['dimonlinemoviemappings.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> finalonlinemoviemappingsdim"
+		}
+	}
+}
